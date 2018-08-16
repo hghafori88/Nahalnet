@@ -12278,7 +12278,7 @@ namespace  {
             }
          
             /**
-             * Create a collection of models from plain arrays.
+             * Create a collection of Models from plain arrays.
              *
              * @param array $items
              * @return \Illuminate\Database\Eloquent\Collection 
@@ -12290,7 +12290,7 @@ namespace  {
             }
          
             /**
-             * Create a collection of models from a raw query.
+             * Create a collection of Models from a raw query.
              *
              * @param string $query
              * @param array $bindings
@@ -12316,7 +12316,7 @@ namespace  {
             }
          
             /**
-             * Find multiple models by their primary keys.
+             * Find multiple Models by their primary keys.
              *
              * @param \Illuminate\Contracts\Support\Arrayable|array $ids
              * @param array $columns
@@ -12445,7 +12445,7 @@ namespace  {
             }
          
             /**
-             * Get the hydrated models without eager loading.
+             * Get the hydrated Models without eager loading.
              *
              * @param array $columns
              * @return \Illuminate\Database\Eloquent\Model[] 
@@ -12457,7 +12457,7 @@ namespace  {
             }
          
             /**
-             * Eager load the relationships for the models.
+             * Eager load the relationships for the Models.
              *
              * @param array $models
              * @return array 

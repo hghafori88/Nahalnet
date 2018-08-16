@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Course extends Model
+{
+    protected $fillable = [
+        'name', 'owner_id', 'duration','description','level','price','score',
+        'checked','checked_note','visitors',
+    ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class)->withTimestamps();
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
+}
