@@ -16,3 +16,13 @@ Route::get('/', function () {
 });
 
 Route::resource('/course','CourseController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/admin', 'AdminController@admin')
+    ->middleware('IsAdmin')
+    ->name('admin');
+
+Route::get('/redirect', 'Auth\LoginController@redirectToProvider');
+Route::get('/callback', 'Auth\LoginController@handleProviderCallback');

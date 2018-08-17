@@ -15,7 +15,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','description','education','study_field','score',
+        'name', 'email', 'password','description','education','study_field','score','type',
+        'avatar','google_id',
     ];
 
     /**
@@ -27,6 +28,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    const ADMIN_TYPE = 'admin';
+    const DEFAULT_TYPE = 'default';
+
+    public function isAdmin()    {
+        return $this->type === self::ADMIN_TYPE;
+    }
+
     public function courses()
     {
         return $this->hasMany(Course::class);
@@ -37,8 +45,5 @@ class User extends Authenticatable
         return $this->hasOne(Payment::class);
     }
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+
 }
