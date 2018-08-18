@@ -24,10 +24,11 @@ class CreateCoursesTable extends Migration
             $table->integer('duration');
             $table->text('description');
             $table->text('level');
-            $table->integer('price');
-            $table->integer('score');
+            $table->string('video_path');
+            $table->integer('price')->nullable();
+            $table->integer('score')->nullable();
             $table->boolean('checked')->default(0);
-            $table->text('check_note');
+            $table->text('check_note')->nullable();
             $table->integer('visitors')->default(1);
             $table->timestamps();
         });

@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
+
 use Illuminate\Http\Request;
+use App\Models\Course;
+use Auth;
+use App\Models\Category;
 
 class CourseController extends Controller
 {
+    protected $course;
+    public function __construct(Course $course)
+    {
+        $this->middleware('auth');
+        $this->course=$course;
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $course=$this->course->all();
+        return view('courses.index',compact('course'));
     }
 
     /**
@@ -24,7 +36,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        $categories=Category::all();
+        return view('courses.create',compact('categories'));
     }
 
     /**
@@ -35,27 +48,43 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $video_path=$request->file('video')->store('videos');
+        $course=Auth::user()->Courses()->create(
+           [
+               'name' => $request['name'],
+               'duration' => $request['duration'],
+               'description' => $request['description'],
+               'level' => $request['level'],
+               'video_path' => $video_path,
+               'price' => $request['price'],
+               'video_path' => $video_path
+           ]);
+        $course->categories()->attach($request->get('category_id'));
+
+
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Models\Course  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show(Course $id)
     {
-        //
+        $course=$this->course->findOrFaild($id);
+        $this->authorize('update',$course);
+        return view('courses.show',compact('course'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Models\Course  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
+    public function edit(Course $id)
     {
         //
     }
@@ -64,10 +93,10 @@ class CourseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Course  $course
+     * @param  \App\Models\Course  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, Course $id)
     {
         //
     }
@@ -75,10 +104,10 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Course  $course
+     * @param  \App\Models\Course  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy(Course $id)
     {
         //
     }

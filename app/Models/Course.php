@@ -8,7 +8,7 @@ class Course extends Model
 {
     protected $fillable = [
         'name', 'owner_id', 'duration','description','level','price','score',
-        'checked','checked_note','visitors',
+        'checked','checked_note','visitors','video_path',
     ];
 
     public function categories()
