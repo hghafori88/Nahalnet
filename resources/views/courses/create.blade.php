@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <label>{{__('messages.select file')}}</label>
-                        <input type="file" class="form-control" name="video">
+                        <input type="file" class="form-control" name="file">
                     </div>
 
                     @if ($errors->any())

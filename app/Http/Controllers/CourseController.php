@@ -48,7 +48,13 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $video_path=$request->file('video')->store('videos');
+        $request->validate([
+            'name' => 'string|required|max:256',
+            'duration' => 'numeric|required',
+            'file' => 'file|mimes:mp4,avi,mov|required|max:30000',
+            'price' => 'numeric'
+        ]);
+        $video_path=$request->file('file')->store('videos');
         $course=Auth::user()->Courses()->create(
            [
                'name' => $request['name'],
@@ -57,9 +63,10 @@ class CourseController extends Controller
                'level' => $request['level'],
                'video_path' => $video_path,
                'price' => $request['price'],
-               'video_path' => $video_path
+
            ]);
         $course->categories()->attach($request->get('category_id'));
+        return back()->with('message','ثبت با موفقیت انجام شد');
 
 
 
