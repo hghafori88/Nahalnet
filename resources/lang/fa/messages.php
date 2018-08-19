@@ -20,5 +20,8 @@ return [
     'level' => 'سطح',
     'price' => 'قیمت',
     'category' => 'دسته بندی',
-    'select file' => 'فایل را انتخاب کنید'
+    'select file' => 'فایل را انتخاب کنید',
+    'intermediate' => 'مقدماتی',
+    'medium' => 'متوسط',
+    'professional' => 'پیشرفته'
 ];

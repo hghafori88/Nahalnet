@@ -16,9 +16,9 @@ class Course extends Model
         return $this->belongsToMany(Category::class)->withTimestamps();
     }
 
-    public function users()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->belongsTo(User::class);
     }
 
     public function videos()

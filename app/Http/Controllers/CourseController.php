@@ -25,8 +25,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $course=$this->course->all();
-        return view('courses.index',compact('course'));
+        $courses=$this->course->all();
+        return view('courses.index',compact('courses'));
     }
 
     /**
@@ -78,9 +78,10 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $id)
+    public function show($id)
     {
-        $course=$this->course->findOrFaild($id);
+
+        $course=$this->course->find($id);
         $this->authorize('update',$course);
         return view('courses.show',compact('course'));
     }
@@ -91,9 +92,12 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $id)
+    public function edit( $id)
     {
-        //
+        $course=$this->course->find($id);
+        $this->authorize('update',$course);
+        $categories=Category::all();
+        return view('courses.edit',compact('course'),compact('categories'));
     }
 
     /**
@@ -103,9 +107,27 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $id)
+    public function update(Request $request,$id)
     {
-        //
+        $request->validate([
+            'name' => 'string|required|max:256',
+            'duration' => 'numeric|required',
+            'file' => 'file|mimes:mp4,avi,mov|required|max:30000',
+            'price' => 'numeric'
+        ]);
+        $video_path=$request->file('file')->store('videos');
+        $course=$this->course->find($id);
+        $course->update([
+            'name' => $request['name'],
+            'duration' => $request['duration'],
+            'description' => $request['description'],
+            'level' => $request['level'],
+            'video_path' => $video_path,
+            'price' => $request['price'],
+
+        ]);
+        $course->categories()->sync($request->get('category_id'));
+        return redirect('/course');
     }
 
     /**
@@ -114,8 +136,11 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $id)
+    public function destroy($id)
     {
-        //
+
+        $course=Course::find($id);
+        $course->delete();
+        return back();
     }
 }

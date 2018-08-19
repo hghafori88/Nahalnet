@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = 'course.index';
    // public $user;
 
     /**
@@ -64,7 +64,7 @@ class LoginController extends Controller
         Auth::login($authUser,true);
         //var_dump($authUser->id);
         //dd($authUser);
-        return redirect()->to('/home');
+        return redirect()->to('/course');
     }
 
     public function findOrCreteUser($user)

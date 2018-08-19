@@ -6,29 +6,30 @@
             <div class="card-body" >
                 <h5 class="card-title">{{__('messages.create course')}}</h5>
 
-                <form method="post" action="{{route('course.store')}}" enctype="multipart/form-data" >
+                <form method="post" action="{{route('course.update',['id' =>$course->id])}}" enctype="multipart/form-data" >
                     {{csrf_field()}}
+                    @method('patch')
                     <div class="form-group">
                         <label for="name">{{__('messages.course name')}}</label>
-                        <input type="text" class="form-control" name="name" id="name" value="{{old('name')}}" aria-describedby="name" placeholder="Enter name">
+                        <input type="text" class="form-control" name="name" id="name" value="{{$course->name}}" aria-describedby="name" placeholder="Enter name">
 
                     </div>
                     <div class="form-group">
                         <label for="duration">{{__('messages.duration')}}</label>
-                        <input type="number" class="form-control" id="duration" name="duration" aria-describedby="duration" value="{{old('duration')}}" placeholder="duration">
+                        <input type="number" class="form-control" id="duration" name="duration" aria-describedby="duration" value="{{$course->duration}}" placeholder="duration">
 
                     </div>
                     <div class="form-group">
                         <label for="description">{{__('messages.description')}}</label>
-                        <input type="text" class="form-control" name="description" id="description" aria-describedby="description" value="{{old('description')}}" placeholder="description">
+                        <input type="text" class="form-control" name="description" id="description" aria-describedby="description" value="{{$course->description}}" placeholder="description">
 
                     </div>
                     <div class="form-group">
                         <label for="price">{{__('messages.level')}}</label>
-                        <select name="level" id="level" class="form-control" value="{{old('level')}}" >
-                            <option>{{__('messages.intermediate')}}</option>
-                            <option>{{__('messages.medium')}}</option>
-                            <option>{{__('messages.professional')}}</option>
+                        <select name="level" id="level" class="form-control" value="{{$course->level}}" >
+                            <option>{{__('message.intermediate')}}</option>
+                            <option>{{__('message.medium')}}</option>
+                            <option>{{__('message.professional')}}</option>
                         </select>
 
                     </div>
@@ -36,14 +37,15 @@
 
                     <div class="form-group" >
                         <label for="price">{{__('messages.price')}}</label>
-                        <input type="number" name="price" class="form-control" id="price"  value="{{old('price')}}" aria-describedby="price" placeholder="price">
+                        <input type="number" name="price" class="form-control" id="price"  value="{{$course->price}}" aria-describedby="price" placeholder="price">
 
                     </div>
                     <div class="form-group">
                         <label for="category">{{__('messages.category')}}</label>
                         <select name="category_id[]" id="tag_list" class="form-control" multiple="multiple" >
                             @foreach($categories as $category)
-                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                <option value="{{$category->id}}"
+                                        {{$course->categories->contains( 'id' , $category->id) ? 'selected' : ''}}>{{$category->name}}</option>
                             @endforeach
                         </select>
                     </div>
